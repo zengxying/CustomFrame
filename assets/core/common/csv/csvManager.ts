@@ -431,6 +431,10 @@ export class CSVManager {
     private _tableCast:any = {};
     private _tableComment:any = {};
 
+    public getTables(){
+        return this._csvTables;
+    }
+
     addTable (tableName:string, tableContent:string, force?:boolean) {
         if (this._csvTables[tableName] && !force) {
             return;

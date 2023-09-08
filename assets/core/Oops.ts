@@ -26,7 +26,7 @@ export var version: string = "1.1.3";
 export class oops {
     /** ----------核心模块---------- */
     /** csv配置 */
-    static csvConfig = new LocalConfig();
+    static csvConfig = LocalConfig.instance;
     /** 游戏配置 */
     static config = new Config();
     /** 日志管理 */

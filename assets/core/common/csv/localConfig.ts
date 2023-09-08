@@ -3,12 +3,12 @@ import { CSVManager } from "./csvManager";
 import { ResLoader } from "../loader/ResLoader";
 import { oops } from "../../Oops";
 const { ccclass, property } = _decorator;
-var RESOURCES_FILE_NAME:any = {}
+var RESOURCES_FILE_NAME = {DATA:"config/csv"}
 @ccclass("LocalConfig")
 export class LocalConfig {
     /* class member could be defined like this */
     private static _instance: LocalConfig;
-    private _csvManager: CSVManager = new CSVManager();
+    private _csvManager: CSVManager = CSVManager.instance;
 
     static get instance () {
         if (this._instance) {
@@ -22,7 +22,7 @@ export class LocalConfig {
     private _callback: Function = new Function();
     private _currentLoad: number = 0;
     private _cntLoad: number = 0;
-
+    
     /**
      * 加载配置文件
      * @param {Function}cb 回调函数 
@@ -32,13 +32,14 @@ export class LocalConfig {
         this._loadCSV(dir);
     }
 
+   
+
     private _loadCSV (dir:string) {
         //新增数据表 请往该数组中添加....
         resources.loadDir(dir, (err: any, assets) => {
             if (err) {
                 return;
             }
-
             let arrCsvFiles = assets.filter((item: any) => {
                 return item._native !== ".md";
             })
@@ -66,6 +67,7 @@ export class LocalConfig {
     public async getTextData (fileName: string) {
         let content = await oops.res.loadAsync<TextAsset>(`${RESOURCES_FILE_NAME.DATA}/` + fileName);
         let text: string = content.text;
+        // content.destroy();
         return text;
     }
 

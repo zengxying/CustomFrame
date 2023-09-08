@@ -21,12 +21,6 @@ const { ccclass, property } = _decorator;
 
 /** 框架显示层根节点 */
 export class Root extends Component {
-    /** 游戏层节点 */
-    @property({
-        type: Node,
-        tooltip: "游戏层"
-    })
-    game: Node = null!;
 
     /** 界面层节点 */
     @property({
@@ -57,6 +51,7 @@ export class Root extends Component {
             this.init();
             this.run();
         });
+
     }
 
     update(dt: number) {
@@ -91,8 +86,8 @@ export class Root extends Component {
         oops.timer = this.persistRootNode.addComponent(TimerManager)!;
 
         oops.language = new LanguageManager();
-        oops.game = new GameManager(this.game);
         oops.gui = new LayerManager(this.gui);
+        oops.game = new GameManager(oops.gui.game);
         this.initGui();
 
         this.initEcsSystem();
